@@ -1,0 +1,229 @@
+fun main() {
+    println("Hello, world!!!")
+    
+    //named values
+    //constant named value using keyword val
+    val PI = 3.14159
+    
+	//variable named value using keyword var
+    var score = 100
+    score = 101
+    println(score)
+    
+    val scoreBuffer = StringBuffer("100")
+	//score = StringBuffer("101")
+	scoreBuffer.append(" Runs")
+
+    //type inference
+    var name = "John"
+    println(name::class)
+	println(PI::class)
+    
+    //type annotation
+    var speed:Float = 10.0f
+    
+    var number1:Int = 10
+    var number2:Double = 99.0
+    var result = number1.toDouble() + number2
+    println(result)
+
+    
+    var firstName = "Amit"
+    var lastName = "Gulati"
+    var weight = 85
+    println(firstName + lastName + weight)
+    
+    //kotlin way
+    // string interpolation
+    var message = "$firstName $lastName $weight, ideal weight is ${weight - 10}"
+    println(message)
+	val price = 100
+    println("price of item is $ $price")
+    
+    
+    
+    //creating an array
+    val names = arrayOf("Amit", "Raj")
+    
+    for (index in 0..10) {
+        println(index)
+    }
+    
+    for (name in names) {
+        println(name)
+    }
+    
+    for ( (index, name) in names.withIndex() ) {
+        println("$index $name")
+    }
+    
+    
+    //creating primitive types
+	val numbers = intArrayOf(1, 2, 3, 4, 5)
+
+    printHello()
+    
+    val greetingMessage = greet("Amit")
+    println(greetingMessage)
+    
+    println("Result = ${add(10, 10)}")
+    
+    println(greet("Amit", "Namaste"))
+    
+    createPerson(name="John", weight=80, age=25, height=163)
+
+    
+    //nullable
+    var myIntegerVariable:Int? = null
+    var myVariable:String? = null
+    
+
+    val count = myVariable?.length 
+    println("Count = $count")
+    
+	val result1 = minMax(intArrayOf(100, 20, 5, 999, 0))
+    println("${result1.first}, ${result1.second}")
+    
+    //destructuring
+    val (min, max) = minMax(intArrayOf(100, 20, 5, 999, 0))
+    println("$min, $max")
+    
+    
+    val student = Student("Amit", "Gulati")
+
+    
+	student.printStudent()
+    
+    
+    
+    //Array, List, Map
+    val array = arrayOf("Amit", "Joe")
+    val intArray = intArrayOf(1, 2, 3, 4)
+    val list = mutableListOf("Amit", "Joe")
+    println(list)
+    list.add("John")
+    println(list)
+    
+    var map = mapOf("key" to "value",
+                    "key1" to "value1")
+    val mutableMap = mutableMapOf("key" to "value",
+                                  "key1" to "value1")
+	mutableMap.put("key2", "value2")
+    
+    println(mutableMap)
+    val value = map["key"]
+    
+    val rect = Rectangle(10, 90)
+    println("Area of a rectangle ${rect.area}")
+    
+	val temp = Temperature(20.0f)
+    println("Fahrenheit temp = ${temp.fahrenheit}")
+    
+    val string = "Game"
+    string.jumble()
+    
+    TestingStaticMethods.myStaticFunction()
+    
+}
+
+//extension method
+fun String.jumble():String{
+    return this
+}
+
+//Android Kotlin Extension
+
+
+class TestingStaticMethods {
+    
+    companion object {
+        fun myStaticFunction() {
+        }
+    }
+        
+}
+
+class Student(var firstName:String, var middleName:String, var lastName:String) {
+    
+    
+    //code associated with the primary constructor goes in to the init block
+    init {
+		println("Student $firstName $lastName has been created")
+    }
+    
+    constructor() : this("", "", "") {
+        
+    }
+    
+    constructor(firstName:String, lastName:String) : this(firstName, "", lastName){
+        print("Secondary constructor called")
+    	this.middleName = middleName
+        
+    }
+    
+    fun printStudent() {
+       println("$firstName, $lastName") 
+    }
+}
+
+class Rectangle( var width:Int, var height:Int) : Any(), Drawable {
+    
+    
+    var area:Int = 0
+    	get()= width * height
+    
+    
+}
+
+class Temperature(var celsius:Float) {
+    var fahrenheit:Float = 0.0f
+    	get()= celsius * 1.8f + 32
+}
+
+fun minMax(numbers:IntArray):Pair<Int, Int> {
+    var min:Int = Int.MAX_VALUE
+    var max:Int = Int.MIN_VALUE
+    
+    for (value in numbers) {
+        if (value < min) {
+            min = value
+        }
+        if (value > max) {
+            max = value
+        }
+    }
+    
+    return Pair(min, max)
+    
+}
+
+
+
+fun printHello():Unit {
+    println("Hello!!")
+}
+
+fun greet(name:String, greeting:String="Hello"):String = "$greeting!! $name"
+
+fun add(firstValue:Int, secondValue:Int) = firstValue + secondValue
+
+fun createPerson(name:String, age:Int, height:Int, weight:Int) {
+    println("$name, $age, $height, $weight")
+}
+
+interface Drawable {
+    fun draw() {
+        println("Default implentation of the draw method")
+    }
+}
+
+
+class Outer {
+    private var name:String = "Outer"
+    
+    inner class NestedClass {
+        init {
+           println(name)
+        }
+    }
+}
